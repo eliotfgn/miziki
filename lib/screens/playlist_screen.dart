@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:music_streaming_app/screens/music_screen.dart';
 
 class PlaylistScreen extends StatelessWidget {
