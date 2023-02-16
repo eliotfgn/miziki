@@ -193,7 +193,6 @@ class MusicControlButtonSection extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
                   shape: CircleBorder(),
                 ),
               ),
