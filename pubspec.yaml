@@ -21,6 +21,7 @@ dependencies:
   flutter_spinkit:
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
