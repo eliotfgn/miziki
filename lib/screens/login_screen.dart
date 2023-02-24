@@ -10,7 +10,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   final _mailController = TextEditingController();
-  final _formKey = new GlobalKey<FormState>();
+  final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/background.png'),
+            fit: BoxFit.cover,
             alignment: Alignment(100, 0)
           )
         ),
@@ -27,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SafeArea(
             child: Container(
               width: double.infinity,
+              height: MediaQuery.of(context).size.height,
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,56 +54,94 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 30),
-
-                  
-
                   Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
-                        const Text('Email',
-                          style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Text('Email',
+                            style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          ),
                         ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(color: Colors.white),
+                          controller: _mailController,
+                          decoration: const InputDecoration(
+                            hintText: 'Entrez votre adresse mail',
+                            hintStyle: TextStyle(
+                              color: Colors.grey
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30.0),),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30.0),),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30.0),),
+                              borderSide: BorderSide(color: Colors.white, width: 2),
+                            ),
+                          ),
+                          validator: (String? value) {
+                            return (value == null || value == "")
+                                ? 'Ce champ est obligatoire'
+                                : null;
+                          },
                         ),
-
-                        const SizedBox(height: 20),
-
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
+                        const SizedBox(height: 15),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Text('Mot de passe',
+                            style: TextStyle(
                               color: Colors.white,
-                              width: 1,
-                            )
-                          ),
-                          child: TextFormField(
-                            keyboardType: TextInputType.text,
-                            style: TextStyle(color: Colors.white),
-                            controller: _mailController,
-                            decoration: const InputDecoration(
-                                hintText: 'Entrez votre adresse mail',
-                                hintStyle: TextStyle(
-                                  color: Colors.grey
-                                )
-                              ),
-                                
-                            validator: (String? value) {
-                              return (value == null || value == "")
-                                  ? 'Ce champ est obligatoire'
-                                  : null;
-                            },
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
-
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
+                          style: const TextStyle(color: Colors.white),
+                          controller: _passwordController,
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                            hintText: 'Entrez votre mot de passe',
+                            hintStyle: TextStyle(
+                                color: Colors.grey
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30.0),),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30.0),),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(30.0),),
+                              borderSide: BorderSide(color: Colors.white, width: 2),
+                            ),
+                          ),
+                          validator: (String? value) {
+                            return (value == null || value == "")
+                                ? 'Ce champ est obligatoire'
+                                : null;
+                          },
+                        ),
                         const SizedBox(height: 35),
-
                         ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState!.validate()){
@@ -117,13 +158,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           child: const Text('Connexion'),
                         ),
-
-                        const SizedBox(height: 30),
                       ]
                     )
                   ),
-
-                  const SizedBox(height: 580),
                 ],
               ),
             ),
