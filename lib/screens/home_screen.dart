@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(right: 20),
               child: CircleAvatar(
                 radius: 25,
-                backgroundImage: AssetImage("assets/images/1.jpg"),
+                backgroundImage: NetworkImage("http://10.0.2.2:8081/download/profile-pic-eliot-1.jpeg"),
               ),
             ),
           ],
@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(top: 30.0, left: 20),
             child: Column(
               children: [
+
               ],
             ),
           )
