@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'playlist_screen.dart';
 
 class MusicScreen extends StatelessWidget {
   const MusicScreen({Key? key}) : super(key: key);
@@ -216,12 +215,7 @@ class MusicControlButtonSection extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PlaylistScreen()));
-                  },
+                  onPressed: () {},
                   icon: Icon(Icons.library_add_rounded),
                   color: Colors.white,
                 ),

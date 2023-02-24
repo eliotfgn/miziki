@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_streaming_app/main.dart';
+import 'package:music_streaming_app/screens/login_screen.dart';
 import 'package:music_streaming_app/screens/music_screen.dart';
 
 
@@ -16,8 +17,10 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Miziki',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
+        scaffoldBackgroundColor: Colors.black87,
       ),
+      home: const LoginScreen(),
     );
   }
 }
