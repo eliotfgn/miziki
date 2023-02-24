@@ -137,19 +137,21 @@ class PlayerControl extends StatelessWidget {
 }
 
 class MusicControlButtonSection extends StatelessWidget {
+  const MusicControlButtonSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
-      padding: EdgeInsets.all(2),
+      margin: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(2),
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 IconButton(
                   icon: Icon(
                     Icons.favorite_border_rounded,
@@ -173,7 +175,7 @@ class MusicControlButtonSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
+              const IconButton(
                 icon: Icon(
                   Icons.skip_previous,
                   color: Colors.black,
@@ -183,19 +185,19 @@ class MusicControlButtonSection extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                ),
                 child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Icon(
+                  padding: const EdgeInsets.all(10),
+                  child: const Icon(
                     Icons.pause,
                     color: Colors.black,
                     size: 40.0,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  shape: CircleBorder(),
-                ),
               ),
-              IconButton(
+              const IconButton(
                 icon: Icon(
                   Icons.skip_next,
                   color: Colors.black,
@@ -210,16 +212,16 @@ class MusicControlButtonSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(30.0),
               color: Colors.black87.withOpacity(0.7),
             ),
-            margin: EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
             // padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
             child: Row(
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.library_add_rounded),
+                  icon: const Icon(Icons.library_add_rounded),
                   color: Colors.white,
                 ),
-                Text(
+                const Text(
                   "Add to playlist",
                   style: TextStyle(
                     color: Colors.white,
