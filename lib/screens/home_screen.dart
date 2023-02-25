@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_streaming_app/widgets/bottom_navigation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -242,6 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         )),
+        bottomNavigationBar: BottomNavigation(0),
       ),
     );
   }
