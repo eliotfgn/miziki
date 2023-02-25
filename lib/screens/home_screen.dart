@@ -37,15 +37,15 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 200,
+                height: 170,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     Container(
-                      height: 200,
-                      width: 200,
+                      height: 170,
+                      width: 170,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(10),
                         color: Colors.red,
                         image: const DecorationImage(
                             image: NetworkImage(
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
               const Text("Playlists en vogue",
                   style: TextStyle(
@@ -182,6 +182,60 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           )
                         ]),
+                      )
+                    ],
+                  )),
+              const SizedBox(
+                height: 40,
+              ),
+              const Text("Chansons du jour",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                  height: 250,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 170,
+                            width: 170,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.red,
+                                image: const DecorationImage(
+                                    image: NetworkImage(
+                                        "http://10.0.2.2:8081/download/album-burna-boy-love-damini.jpeg"))),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            "Last Last",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const Text(
+                            "Burna Boy",
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
                       )
                     ],
                   ))
