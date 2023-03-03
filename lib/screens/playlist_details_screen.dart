@@ -155,55 +155,59 @@ class TrackItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
-      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SizedBox(
-          width: 20,
-          child: Text(
-            "${(index + 1)}.".padLeft(3, "0"),
-            style: const TextStyle(
-              color: Colors.red,
-              fontSize: 13,
-            ),
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: Colors.red,
-                image: DecorationImage(
-                    image: NetworkImage(
-                  "${apiFileServerBaseUrl}download/${playlist?.tracks[index].cover}",
-                )))),
-        const SizedBox(
-          width: 10,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              playlist?.tracks[index].title ?? "-",
+      child: InkWell(
+        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          SizedBox(
+            width: 20,
+            child: Text(
+              "${(index + 1)}.".padLeft(3, "0"),
               style: const TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+                color: Colors.red,
+                fontSize: 13,
               ),
             ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              playlist?.tracks[index].artists[0].name ?? "-",
-              style: const TextStyle(
-                  color: Colors.red, fontSize: 13, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ]),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.red,
+                  image: DecorationImage(
+                      image: NetworkImage(
+                    "${apiFileServerBaseUrl}download/${playlist?.tracks[index].cover}",
+                  )))),
+          const SizedBox(
+            width: 10,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                playlist?.tracks[index].title ?? "-",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Text(
+                playlist?.tracks[index].artists[0].name ?? "-",
+                style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ]),
+      ),
     );
   }
 }
