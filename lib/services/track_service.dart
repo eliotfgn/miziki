@@ -13,6 +13,7 @@ class TrackService {
         "${apiMizikiBaseUrl}tracks/$id",
       );
       track = Track.fromJson(response.data);
+      print(response.data);
     } on DioError catch (e) {
       print(e);
     }

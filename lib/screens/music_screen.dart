@@ -1,61 +1,91 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
-class MusicScreen extends StatelessWidget {
-  const MusicScreen({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:music_streaming_app/constants/utils.dart';
+import 'package:music_streaming_app/models/track.dart';
+import 'package:music_streaming_app/services/track_service.dart';
+
+class MusicScreen extends StatefulWidget {
+  int trackId;
+
+  MusicScreen(this.trackId, {Key? key}) : super(key: key);
+
+  @override
+  State<MusicScreen> createState() => _MusicScreenState();
+}
+
+class _MusicScreenState extends State<MusicScreen> {
+  Track? track;
+
+  initTrack(id) async {
+    track = await TrackService.getTrack(id);
+    print(track?.id);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initTrack(widget.trackId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.black87.withOpacity(0.5),
-            Colors.white.withOpacity(0.8),
-          ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
+      appBar: MyAppBar(),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image:
+                NetworkImage("${apiFileServerBaseUrl}download/${track?.cover}"),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        extendBodyBehindAppBar: true,
-        appBar: MyAppBar(),
-        bottomNavigationBar: MyBottomNavigationBar(),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                child: Image.network(
-                  "https://i.pinimg.com/236x/d1/e5/3f/d1e53f0adb299da844181b2309caab84.jpg",
-                )),
-            SizedBox(
-              height: 15,
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  "Pop Smoke",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.8),
-                    fontSize: 18,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                height: 300,
+                width: 300,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            "${apiFileServerBaseUrl}download/${track?.cover}"))),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Column(
+                children: [
+                  const SizedBox(
+                    height: 8,
                   ),
-                ),
-                Text(
-                  "Imperfections",
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(0.9),
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    "${track?.artists[0].name}",
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 18,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            PlayerControl(),
-          ],
+                  Text(
+                    "${track?.title}",
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.9),
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              PlayerControl(),
+            ],
+          ),
         ),
       ),
     );
@@ -70,7 +100,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: IconButton(
+      leading: const IconButton(
         icon: Icon(
           Icons.expand_circle_down_sharp,
           color: Colors.white,
@@ -123,7 +153,6 @@ class PlayerControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -142,7 +171,6 @@ class MusicControlButtonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(2),
       child: Column(
         children: [
@@ -155,7 +183,7 @@ class MusicControlButtonSection extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Icons.favorite_border_rounded,
-                    color: Colors.redAccent,
+                    color: Colors.white,
                     size: 35,
                   ),
                   onPressed: null,
@@ -163,7 +191,7 @@ class MusicControlButtonSection extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Icons.shuffle,
-                    color: Colors.grey,
+                    color: Colors.white,
                     size: 35,
                   ),
                   onPressed: null,
@@ -242,10 +270,9 @@ class MusicSliderSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(5),
       child: Slider(
-        value: 15,
-        min: 1.0,
+        value: 0,
+        min: 0,
         max: 100,
-        divisions: 10,
         activeColor: Colors.blue,
         inactiveColor: Colors.grey,
         onChanged: (double newValue) {},
