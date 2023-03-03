@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_streaming_app/constants/utils.dart';
 import 'package:music_streaming_app/models/track.dart';
 import 'package:music_streaming_app/services/track_service.dart';
@@ -16,11 +17,34 @@ class MusicScreen extends StatefulWidget {
 
 class _MusicScreenState extends State<MusicScreen> {
   Track? track;
+  bool playing = false;
+  AudioPlayer player = AudioPlayer();
 
   initTrack(id) async {
     track = await TrackService.getTrack(id);
-    print(track?.id);
-    setState(() {});
+    if (track != null) {
+      initAudioPlayer();
+      setState(() {});
+    }
+  }
+
+  initAudioPlayer() async {
+    final url = "${apiFileServerBaseUrl}download/${track?.audio}";
+    Duration? duration = await player.setUrl(url);
+  }
+
+  play() async {
+    await player.play();
+    setState(() {
+      playing = true;
+    });
+  }
+
+  pause() async {
+    await player.pause();
+    setState(() {
+      playing = false;
+    });
   }
 
   @override
@@ -37,6 +61,7 @@ class _MusicScreenState extends State<MusicScreen> {
       extendBodyBehindAppBar: true,
       appBar: MyAppBar(),
       body: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image:
@@ -47,8 +72,10 @@ class _MusicScreenState extends State<MusicScreen> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              SizedBox(
+                height: 200,
+              ),
               Container(
                 height: 300,
                 width: 300,
@@ -83,7 +110,84 @@ class _MusicScreenState extends State<MusicScreen> {
                   ),
                 ],
               ),
-              PlayerControl(),
+              //PlayerControl(),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.favorite_border_rounded,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.shuffle_rounded,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Slider(
+                  value: 0,
+                  onChanged: (newValue) {},
+                  activeColor: Colors.white,
+                  inactiveColor: Colors.white.withOpacity(0.5)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.skip_previous_rounded,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      if (playing) {
+                        await pause();
+                      } else {
+                        await play();
+                      }
+                    },
+                    icon: Icon(
+                      playing
+                          ? Icons.pause_circle_filled_rounded
+                          : Icons.play_circle_fill_rounded,
+                      color: Colors.white,
+                      size: 60,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.skip_next_rounded,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

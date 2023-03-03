@@ -14,13 +14,13 @@ dependencies:
 
 
   cupertino_icons: ^1.0.2
-  audioplayers: ^1.1.1
   google_fonts: ^2.1.0
   dio:
   shared_preferences:
   fluttertoast: ^8.1.2
   flutter_spinkit:
   font_awesome_flutter:
+  just_audio:
 
 
 dev_dependencies:
