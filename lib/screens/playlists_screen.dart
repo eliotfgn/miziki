@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_streaming_app/screens/playlist_details_screen.dart';
 
 import '../models/playlist.dart';
 import '../services/playlist_service.dart';
@@ -216,50 +217,59 @@ class PlaylistWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            height: 170,
-            width: 170,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.red.shade900,
-                image: DecorationImage(
-                  image: NetworkImage(
-                      "http://10.0.2.2:8081/download/${playlist.cover}"),
-                  fit: BoxFit.cover,
-                )),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        SizedBox(
-          width: 170,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                playlist.name,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
-                  letterSpacing: 0.8,
-                ),
-              ),
-              const Spacer(),
-              Text("${playlist.tracks.length} sons",
-                  style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 15,
-                    letterSpacing: 0.8,
+    return GestureDetector(
+      onTap: () {
+        print("object");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PlaylistDetailsScreen(playlist.id)));
+      },
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              height: 170,
+              width: 170,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.red.shade900,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                        "http://10.0.2.2:8081/download/${playlist.cover}"),
+                    fit: BoxFit.cover,
                   )),
-            ],
+            ),
           ),
-        )
-      ],
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            width: 170,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  playlist.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    letterSpacing: 0.8,
+                  ),
+                ),
+                const Spacer(),
+                Text("${playlist.tracks.length} sons",
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 15,
+                      letterSpacing: 0.8,
+                    )),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_streaming_app/models/playlist.dart';
+import 'package:music_streaming_app/models/track.dart';
 
 import '../constants/utils.dart';
 import '../services/playlist_service.dart';
@@ -132,7 +133,9 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
                 itemBuilder: (context, index) {
                   return TrackItem(
                     index: index,
-                    playlist: playlist,
+                    title: playlist?.tracks[index].title,
+                    cover: playlist?.tracks[index].cover,
+                    artistName: playlist?.tracks[index].artists[0].name,
                   );
                 },
               )
@@ -146,10 +149,19 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
 
 class TrackItem extends StatelessWidget {
   final int index;
-  final Playlist? playlist;
+  final Track? track;
+  final String? cover;
+  final String? title;
+  final String? artistName;
 
-  const TrackItem({Key? key, required this.index, this.playlist})
-      : super(key: key);
+  const TrackItem({
+    Key? key,
+    required this.index,
+    this.track,
+    this.cover,
+    this.title,
+    this.artistName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +190,7 @@ class TrackItem extends StatelessWidget {
                   color: Colors.red,
                   image: DecorationImage(
                       image: NetworkImage(
-                    "${apiFileServerBaseUrl}download/${playlist?.tracks[index].cover}",
+                    "${apiFileServerBaseUrl}download/$cover",
                   )))),
           const SizedBox(
             width: 10,
@@ -187,18 +199,18 @@ class TrackItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                playlist?.tracks[index].title ?? "-",
+                title ?? "-",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
-                playlist?.tracks[index].artists[0].name ?? "-",
+                artistName ?? "-",
                 style: const TextStyle(
                     color: Colors.red,
                     fontSize: 13,

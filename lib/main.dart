@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:music_streaming_app/screens/music_screen.dart';
+import 'package:music_streaming_app/screens/playlist_details_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -31,7 +31,7 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black87,
         fontFamily: GoogleFonts.quicksand().fontFamily,
       ),
-      home: MusicScreen(4),
+      home: PlaylistDetailsScreen(2),
     );
   }
 }
