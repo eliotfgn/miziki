@@ -1,3 +1,5 @@
+import 'package:music_streaming_app/models/artist.dart';
+
 class Track {
   final int id;
   final String title;
@@ -6,7 +8,7 @@ class Track {
   final String cover;
   final List<String> tags;
   final int likesCount;
-  List<int> artists = [];
+  List<Artist> artists = [];
 
   Track(this.id, this.title, this.duration, this.audio, this.cover, this.tags,
       this.likesCount, this.artists);
@@ -19,5 +21,7 @@ class Track {
       json['cover'],
       json['tags'].cast<String>(),
       json['likesCount'],
-      json['artists'].cast<int>());
+      json['artists']
+          .map<Artist>((artist) => Artist.fromJson(artist))
+          .toList());
 }
