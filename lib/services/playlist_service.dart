@@ -9,7 +9,7 @@ class PlaylistService {
 
     try {
       response = await Dio().get(
-        "${apiMizikiBaseUrl}playlists",
+        "${apiMizikiBaseUrl}playlists/",
       );
       response.data.forEach((playlist) {
         playlists.add(Playlist.fromJson(playlist));
