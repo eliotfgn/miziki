@@ -1,7 +1,7 @@
 import 'package:music_streaming_app/models/artist.dart';
 
 class Track {
-  final String id;
+  final int id;
   final String title;
   final int duration;
   final String audio;
