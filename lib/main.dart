@@ -31,7 +31,7 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black87,
         fontFamily: GoogleFonts.quicksand().fontFamily,
       ),
-      home: PlaylistDetailsScreen(2),
+      home: const PlaylistDetailsScreen(2),
     );
   }
 }

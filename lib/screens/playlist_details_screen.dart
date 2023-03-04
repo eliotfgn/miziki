@@ -52,85 +52,86 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 170,
-                width: 170,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.red,
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        "http://10.0.2.2:8081/download/${playlist?.cover}"),
-                    fit: BoxFit.fitWidth,
-                  ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 170,
+              width: 170,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.red,
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "http://10.0.2.2:8081/download/${playlist?.cover}"),
+                  fit: BoxFit.fitWidth,
                 ),
               ),
-              const SizedBox(
-                height: 15,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              playlist?.name ?? "-",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
               ),
-              Text(
-                playlist?.name ?? "-",
-                style: const TextStyle(
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              "${playlist?.tracks.length} sons",
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 15,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            // a row with music player controller
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.skip_previous_rounded,
                   color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+                  size: 40,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "${playlist?.tracks.length} sons",
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 15,
+                SizedBox(
+                  width: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              // a row with music player controller
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.skip_previous_rounded,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.play_circle_outline_rounded,
-                    color: Colors.white,
-                    size: 70,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.skip_next_rounded,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              // a list of tracks
-              ListView.builder(
-                shrinkWrap: true,
+                Icon(
+                  Icons.play_circle_outline_rounded,
+                  color: Colors.white,
+                  size: 70,
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Icon(
+                  Icons.skip_next_rounded,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            // a list of tracks
+            Flexible(
+              child: ListView.builder(
                 itemCount: playlist?.tracks.length,
                 itemBuilder: (context, index) {
+                  print("printing: ${playlist?.tracks.length}");
                   return TrackItem(
                     index: index,
                     title: playlist?.tracks[index].title,
@@ -138,9 +139,9 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
                     artistName: playlist?.tracks[index].artists[0].name,
                   );
                 },
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
