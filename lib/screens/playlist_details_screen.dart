@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_streaming_app/models/playlist.dart';
-import 'package:music_streaming_app/models/track.dart';
+import 'package:music_streaming_app/screens/music_screen.dart';
 
 import '../constants/utils.dart';
 import '../services/playlist_service.dart';
@@ -137,6 +137,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
                     title: playlist?.tracks[index].title,
                     cover: playlist?.tracks[index].cover,
                     artistName: playlist?.tracks[index].artists[0].name,
+                    trackId: playlist?.tracks[index].id,
                   );
                 },
               ),
@@ -150,7 +151,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
 
 class TrackItem extends StatelessWidget {
   final int index;
-  final Track? track;
+  final int? trackId;
   final String? cover;
   final String? title;
   final String? artistName;
@@ -158,7 +159,7 @@ class TrackItem extends StatelessWidget {
   const TrackItem({
     Key? key,
     required this.index,
-    this.track,
+    this.trackId,
     this.cover,
     this.title,
     this.artistName,
@@ -168,7 +169,11 @@ class TrackItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
-      child: InkWell(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => MusicScreen(trackId!)));
+        },
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(
             width: 20,
