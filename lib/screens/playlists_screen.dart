@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:music_streaming_app/constants/utils.dart';
+import 'package:music_streaming_app/models/artist.dart';
 import 'package:music_streaming_app/screens/playlist_details_screen.dart';
+import 'package:music_streaming_app/services/artist_service.dart';
 import 'package:music_streaming_app/widgets/bottom_navigation.dart';
 
 import '../models/playlist.dart';
@@ -14,9 +17,15 @@ class PlaylistsScreen extends StatefulWidget {
 
 class _PlaylistsScreenState extends State<PlaylistsScreen> {
   List<Playlist> playlists = [];
+  List<Artist> artists = [];
 
   initPlaylists() async {
     playlists = await PlaylistService.getPlaylists();
+    setState(() {});
+  }
+
+  initArtists() async {
+    artists = await ArtistService.getAllArtists();
     setState(() {});
   }
 
@@ -25,6 +34,7 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
     // TODO: implement initState
     super.initState();
     initPlaylists();
+    initArtists();
   }
 
   @override
@@ -129,19 +139,26 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
           height: 100,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: [
-              Column(
-                children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.red.shade900,
-                  ),
-                  Text('Artist',
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 15)),
-                ],
-              )
-            ],
+            children: artists.map((artist) {
+              return Container(
+                margin: const EdgeInsets.only(right: 20),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.red.shade900,
+                      backgroundImage: NetworkImage(
+                          '${apiFileServerBaseUrl}download/${artist.profilePic}'),
+                    ),
+                    Text(artist.name,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              );
+            }).toList(),
           ),
         ),
         const SizedBox(
