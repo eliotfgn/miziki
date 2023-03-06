@@ -103,48 +103,6 @@ class _PlaylistsScreenState extends State<PlaylistsScreen> {
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.red.shade900,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    width: 170,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
-                        Text(
-                          "Title",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                            letterSpacing: 0.8,
-                          ),
-                        ),
-                        Spacer(),
-                        Text("123 sons",
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 15,
-                              letterSpacing: 0.8,
-                            )),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              Column(
-                children: [
-                  Container(
-                    height: 170,
-                    width: 170,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.red.shade900,
-                    ),
                     child: const Icon(
                       Icons.add,
                       size: 40,
