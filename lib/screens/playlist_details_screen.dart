@@ -131,7 +131,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
               child: ListView.builder(
                 itemCount: playlist?.tracks.length,
                 itemBuilder: (context, index) {
-                  print("printing: ${playlist?.tracks.length}");
+                  print("printing: ${playlist?.tracks[index].id}");
                   return TrackItem(
                     index: index,
                     title: playlist?.tracks[index].title,
@@ -171,8 +171,11 @@ class TrackItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => MusicScreen(trackId!)));
+          if (trackId != null) {
+            print(trackId);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MusicScreen(trackId!)));
+          }
         },
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(

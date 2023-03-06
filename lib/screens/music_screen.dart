@@ -24,6 +24,7 @@ class _MusicScreenState extends State<MusicScreen> {
     track = await TrackService.getTrack(id);
     if (track != null) {
       initAudioPlayer();
+      play();
       setState(() {});
     }
   }
@@ -37,6 +38,7 @@ class _MusicScreenState extends State<MusicScreen> {
     await player.play();
     setState(() {
       playing = true;
+      print(playing);
     });
   }
 
@@ -44,6 +46,7 @@ class _MusicScreenState extends State<MusicScreen> {
     await player.pause();
     setState(() {
       playing = false;
+      print(playing);
     });
   }
 
@@ -160,11 +163,11 @@ class _MusicScreenState extends State<MusicScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () async {
+                    onPressed: () {
                       if (playing) {
-                        await pause();
+                        pause();
                       } else {
-                        await play();
+                        play();
                       }
                     },
                     icon: Icon(
