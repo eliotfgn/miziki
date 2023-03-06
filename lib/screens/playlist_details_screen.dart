@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_streaming_app/models/playlist.dart';
 import 'package:music_streaming_app/screens/music_screen.dart';
+import 'package:music_streaming_app/widgets/bottom_navigation.dart';
 
 import '../constants/utils.dart';
 import '../services/playlist_service.dart';
@@ -145,6 +146,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigation(2),
     );
   }
 }
