@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:music_streaming_app/screens/home_screen.dart';
+import 'package:music_streaming_app/screens/playlists_screen.dart';
 
 class BottomNavigation extends StatelessWidget {
   final int currentIndex;
@@ -9,6 +11,20 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      onTap: (int index) {
+        switch (index) {
+          case 0:
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
+            break;
+          case 2:
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PlaylistsScreen()));
+            break;
+        }
+      },
       currentIndex: currentIndex,
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.grey.shade900,
