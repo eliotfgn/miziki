@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_streaming_app/constants/utils.dart';
+import 'package:music_streaming_app/screens/music_screen.dart';
+import 'package:music_streaming_app/screens/playlist_details_screen.dart';
 import 'package:music_streaming_app/services/playlist_service.dart';
 import 'package:music_streaming_app/services/track_service.dart';
 import 'package:music_streaming_app/widgets/bottom_navigation.dart';
@@ -78,34 +80,43 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     children: playlists
                         .map(
-                          (playlist) => Container(
-                            height: 170,
-                            width: 170,
-                            margin: const EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.red,
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      "${apiFileServerBaseUrl}download/${playlist.cover}"),
-                                  fit: BoxFit.fitWidth,
-                                  colorFilter: const ColorFilter.mode(
-                                      Colors.black45, BlendMode.darken)),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  playlist.name,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
+                          (playlist) => GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PlaylistDetailsScreen(playlist.id)));
+                            },
+                            child: Container(
+                              height: 170,
+                              width: 170,
+                              margin: const EdgeInsets.only(right: 20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.red,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        "${apiFileServerBaseUrl}download/${playlist.cover}"),
+                                    fit: BoxFit.fitWidth,
+                                    colorFilter: const ColorFilter.mode(
+                                        Colors.black45, BlendMode.darken)),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    playlist.name,
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         )
@@ -127,96 +138,114 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      Container(
-                        height: 65,
-                        width: 180,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Colors.blue.shade900,
-                                Colors.purple.shade900,
-                                Colors.pink.shade900,
-                              ]),
-                        ),
-                        child: Row(children: [
-                          const SizedBox(
-                            width: 15,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PlaylistDetailsScreen(
+                                      trendingPlaylists[0].id)));
+                        },
+                        child: Container(
+                          height: 65,
+                          width: 180,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.blue.shade900,
+                                  Colors.purple.shade900,
+                                  Colors.pink.shade900,
+                                ]),
                           ),
-                          CircleAvatar(
-                            radius: 22,
-                            backgroundColor: Colors.white,
-                            backgroundImage: NetworkImage(
-                                "${apiFileServerBaseUrl}download/${trendingPlaylists[0].cover}"),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                trendingPlaylists[0].name,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text("${playlists[0].tracks.length} titres",
+                          child: Row(children: [
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            CircleAvatar(
+                              radius: 22,
+                              backgroundColor: Colors.white,
+                              backgroundImage: NetworkImage(
+                                  "${apiFileServerBaseUrl}download/${trendingPlaylists[0].cover}"),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  trendingPlaylists[0].name,
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 12))
-                            ],
-                          )
-                        ]),
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text("${playlists[0].tracks.length} titres",
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 12))
+                              ],
+                            )
+                          ]),
+                        ),
                       ),
                       const SizedBox(
                         width: 25,
                       ),
-                      Container(
-                        height: 70,
-                        width: 180,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Colors.pink.shade900,
-                                Colors.red.shade900,
-                                Colors.yellow.shade900,
-                              ]),
-                        ),
-                        child: Row(children: [
-                          const SizedBox(
-                            width: 15,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PlaylistDetailsScreen(
+                                      trendingPlaylists[1].id)));
+                        },
+                        child: Container(
+                          height: 70,
+                          width: 180,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.pink.shade900,
+                                  Colors.red.shade900,
+                                  Colors.yellow.shade900,
+                                ]),
                           ),
-                          CircleAvatar(
-                            radius: 22,
-                            backgroundColor: Colors.white,
-                            backgroundImage: NetworkImage(
-                                "${apiFileServerBaseUrl}download/${trendingPlaylists[1].cover}"),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                trendingPlaylists[1].name,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text("${playlists[1].tracks.length} titres",
+                          child: Row(children: [
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            CircleAvatar(
+                              radius: 22,
+                              backgroundColor: Colors.white,
+                              backgroundImage: NetworkImage(
+                                  "${apiFileServerBaseUrl}download/${trendingPlaylists[1].cover}"),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  trendingPlaylists[1].name,
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 12))
-                            ],
-                          )
-                        ]),
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text("${playlists[1].tracks.length} titres",
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 12))
+                              ],
+                            )
+                          ]),
+                        ),
                       )
                     ],
                   )),
@@ -236,51 +265,61 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: trendingTracks
-                          .map((track) => Container(
-                                margin: const EdgeInsets.only(right: 20),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 170,
-                                      width: 170,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.red,
-                                          image: DecorationImage(
-                                              image: NetworkImage(
-                                                  "${apiFileServerBaseUrl}download/${track.cover}"))),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      track.title,
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      track.artists[0].name,
-                                      style: const TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
+                          .map((track) => GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MusicScreen(track.id)));
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 20),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 170,
+                                        width: 170,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.red,
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    "${apiFileServerBaseUrl}download/${track.cover}"))),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        track.title,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        track.artists[0].name,
+                                        style: const TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ))
                           .toList()))
             ],
           ),
         )),
-        bottomNavigationBar: BottomNavigation(0),
+        bottomNavigationBar: const BottomNavigation(0),
       ),
     );
   }
