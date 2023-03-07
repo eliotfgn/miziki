@@ -28,7 +28,7 @@ class BottomNavigation extends StatelessWidget {
       currentIndex: currentIndex,
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.grey.shade900,
-      selectedItemColor: Colors.red,
+      selectedItemColor: Color(0xfffD65A14),
       unselectedItemColor: Colors.grey,
       enableFeedback: false,
       showSelectedLabels: false,

@@ -19,6 +19,7 @@ class _MusicScreenState extends State<MusicScreen> {
   Track? track;
   bool playing = false;
   AudioPlayer player = AudioPlayer();
+  late Stream<Duration> position;
 
   initTrack(id) async {
     track = await TrackService.getTrack(id);
@@ -32,6 +33,7 @@ class _MusicScreenState extends State<MusicScreen> {
   initAudioPlayer() async {
     final url = "${apiFileServerBaseUrl}download/${track?.audio}";
     Duration? duration = await player.setUrl(url);
+    position = player.positionStream;
   }
 
   play() async {
@@ -200,20 +202,21 @@ class _MusicScreenState extends State<MusicScreen> {
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  Size get preferredSize => new Size.fromHeight(60);
+  @override
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: const IconButton(
-        icon: Icon(
+      leading: IconButton(
+        icon: const Icon(
           Icons.expand_circle_down_sharp,
           color: Colors.white,
           size: 25,
         ),
-        onPressed: null,
+        onPressed: () {},
       ),
     );
   }

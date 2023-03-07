@@ -238,7 +238,7 @@ class PlaylistWidget extends StatelessWidget {
                 const Spacer(),
                 Text("${playlist.tracks.length} sons",
                     style: const TextStyle(
-                      color: Colors.red,
+                      color: Color(0xfffd65a14),
                       fontSize: 15,
                       letterSpacing: 0.8,
                     )),

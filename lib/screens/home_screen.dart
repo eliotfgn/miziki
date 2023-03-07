@@ -286,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            color: Colors.red,
+                                            color: const Color(0xfffd65a14),
                                             image: DecorationImage(
                                                 image: NetworkImage(
                                                     "${apiFileServerBaseUrl}download/${track.cover}"))),

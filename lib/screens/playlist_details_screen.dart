@@ -65,7 +65,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
               width: 170,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.red,
+                color: Color(0xfffD65A14),
                 image: DecorationImage(
                   image: NetworkImage(
                       "http://10.0.2.2:8081/download/${playlist?.cover}"),
@@ -90,7 +90,7 @@ class _PlaylistDetailsScreenState extends State<PlaylistDetailsScreen> {
             Text(
               "${playlist?.tracks.length} sons",
               style: const TextStyle(
-                color: Colors.red,
+                color: Color(0xfffD65A14),
                 fontSize: 15,
               ),
             ),
@@ -185,7 +185,7 @@ class TrackItem extends StatelessWidget {
             child: Text(
               "${(index + 1)}.".padLeft(3, "0"),
               style: const TextStyle(
-                color: Colors.red,
+                color: Color(0xfffD65A14),
                 fontSize: 13,
               ),
             ),
@@ -198,7 +198,7 @@ class TrackItem extends StatelessWidget {
               width: 40,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  color: Colors.red,
+                  color: Color(0xfffD65A14),
                   image: DecorationImage(
                       image: NetworkImage(
                     "${apiFileServerBaseUrl}download/$cover",
@@ -223,7 +223,7 @@ class TrackItem extends StatelessWidget {
               Text(
                 artistName ?? "-",
                 style: const TextStyle(
-                    color: Colors.red,
+                    color: Color(0xfffD65A14),
                     fontSize: 13,
                     fontWeight: FontWeight.bold),
               ),
