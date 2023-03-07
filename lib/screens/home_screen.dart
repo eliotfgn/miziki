@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:music_streaming_app/constants/utils.dart';
 import 'package:music_streaming_app/screens/music_screen.dart';
 import 'package:music_streaming_app/screens/playlist_details_screen.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool loading = true;
   List<Track> trendingTracks = [];
   List<Playlist> trendingPlaylists = [];
   List<Playlist> playlists = [];
@@ -44,6 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     initTracks();
     initPlaylists();
+    if (trendingTracks.isEmpty) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -71,253 +78,275 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.only(top: 30.0, left: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 170,
-                child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: playlists
-                        .map(
-                          (playlist) => GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PlaylistDetailsScreen(playlist.id)));
-                            },
-                            child: Container(
-                              height: 170,
-                              width: 170,
-                              margin: const EdgeInsets.only(right: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.red,
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        "${apiFileServerBaseUrl}download/${playlist.cover}"),
-                                    fit: BoxFit.fitWidth,
-                                    colorFilter: const ColorFilter.mode(
-                                        Colors.black45, BlendMode.darken)),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    playlist.name,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+          child: loading
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    SpinKitDancingSquare(
+                      color: Color(0xfffD65A14),
+                      size: 100,
+                    ),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 170,
+                      child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: playlists
+                              .map(
+                                (playlist) => GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PlaylistDetailsScreen(
+                                                    playlist.id)));
+                                  },
+                                  child: Container(
+                                    height: 170,
+                                    width: 170,
+                                    margin: const EdgeInsets.only(right: 20),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.red,
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              "${apiFileServerBaseUrl}download/${playlist.cover}"),
+                                          fit: BoxFit.fitWidth,
+                                          colorFilter: const ColorFilter.mode(
+                                              Colors.black45,
+                                              BlendMode.darken)),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          playlist.name,
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList()),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    const Text("Playlists en vogue",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                        height: 65,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PlaylistDetailsScreen(
+                                                trendingPlaylists[0].id)));
+                              },
+                              child: Container(
+                                height: 65,
+                                width: 180,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Colors.blue.shade900,
+                                        Colors.purple.shade900,
+                                        Colors.pink.shade900,
+                                      ]),
+                                ),
+                                child: Row(children: [
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  CircleAvatar(
+                                    radius: 22,
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: NetworkImage(
+                                        "${apiFileServerBaseUrl}download/${trendingPlaylists[0].cover}"),
                                   ),
                                   const SizedBox(
-                                    height: 10,
+                                    width: 10,
                                   ),
-                                ],
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        trendingPlaylists[0].name,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                          "${playlists[0].tracks.length} titres",
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12))
+                                    ],
+                                  )
+                                ]),
                               ),
                             ),
-                          ),
-                        )
-                        .toList()),
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              const Text("Playlists en vogue",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                  height: 65,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PlaylistDetailsScreen(
-                                      trendingPlaylists[0].id)));
-                        },
-                        child: Container(
-                          height: 65,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Colors.blue.shade900,
-                                  Colors.purple.shade900,
-                                  Colors.pink.shade900,
-                                ]),
-                          ),
-                          child: Row(children: [
                             const SizedBox(
-                              width: 15,
+                              width: 25,
                             ),
-                            CircleAvatar(
-                              radius: 22,
-                              backgroundColor: Colors.white,
-                              backgroundImage: NetworkImage(
-                                  "${apiFileServerBaseUrl}download/${trendingPlaylists[0].cover}"),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  trendingPlaylists[0].name,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            PlaylistDetailsScreen(
+                                                trendingPlaylists[1].id)));
+                              },
+                              child: Container(
+                                height: 70,
+                                width: 180,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Colors.pink.shade900,
+                                        Colors.red.shade900,
+                                        Colors.yellow.shade900,
+                                      ]),
                                 ),
-                                Text("${playlists[0].tracks.length} titres",
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 12))
-                              ],
-                            )
-                          ]),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 25,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PlaylistDetailsScreen(
-                                      trendingPlaylists[1].id)));
-                        },
-                        child: Container(
-                          height: 70,
-                          width: 180,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  Colors.pink.shade900,
-                                  Colors.red.shade900,
-                                  Colors.yellow.shade900,
-                                ]),
-                          ),
-                          child: Row(children: [
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            CircleAvatar(
-                              radius: 22,
-                              backgroundColor: Colors.white,
-                              backgroundImage: NetworkImage(
-                                  "${apiFileServerBaseUrl}download/${trendingPlaylists[1].cover}"),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  trendingPlaylists[1].name,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text("${playlists[1].tracks.length} titres",
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 12))
-                              ],
-                            )
-                          ]),
-                        ),
-                      )
-                    ],
-                  )),
-              const SizedBox(
-                height: 40,
-              ),
-              const Text("Chansons du jour",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                  height: 250,
-                  child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: trendingTracks
-                          .map((track) => GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              MusicScreen(track.id)));
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 20),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: 170,
-                                        width: 170,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: const Color(0xfffd65a14),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                    "${apiFileServerBaseUrl}download/${track.cover}"))),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        track.title,
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        track.artists[0].name,
-                                        style: const TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
+                                child: Row(children: [
+                                  const SizedBox(
+                                    width: 15,
                                   ),
-                                ),
-                              ))
-                          .toList()))
-            ],
-          ),
+                                  CircleAvatar(
+                                    radius: 22,
+                                    backgroundColor: Colors.white,
+                                    backgroundImage: NetworkImage(
+                                        "${apiFileServerBaseUrl}download/${trendingPlaylists[1].cover}"),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        trendingPlaylists[1].name,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                          "${playlists[1].tracks.length} titres",
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12))
+                                    ],
+                                  )
+                                ]),
+                              ),
+                            )
+                          ],
+                        )),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    const Text("Chansons du jour",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                        height: 250,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: trendingTracks
+                                .map((track) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MusicScreen(track.id)));
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 20),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 170,
+                                              width: 170,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color:
+                                                      const Color(0xfffd65a14),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(
+                                                          "${apiFileServerBaseUrl}download/${track.cover}"))),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              track.title,
+                                              style: const TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              track.artists[0].name,
+                                              style: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ))
+                                .toList()))
+                  ],
+                ),
         )),
         bottomNavigationBar: const BottomNavigation(0),
       ),
